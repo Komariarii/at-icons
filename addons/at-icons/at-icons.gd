@@ -3,9 +3,41 @@ extends EditorPlugin
 
 var dock : EditorDock
 
-#func _enable_plugin() -> void:
-	## Add autoloads here.
-	#pass
+var COLOR_SETTING: Dictionary = {
+		"name": "at-icons/icon_colors",
+		"value": DEFAULT_COLORS,
+		"type": TYPE_DICTIONARY,
+		"hint": PROPERTY_HINT_DICTIONARY_TYPE,
+		"hint_string": "%d:;%d:" % [TYPE_STRING, TYPE_COLOR]
+	}
+
+const DEFAULT_COLORS: Dictionary[String, Color] = {
+	"Preview": Color("292929"),
+	"Node": Color("e0e0e0"),
+	"Node2D": Color("8da5f3"),
+	"Node3D": Color("fc7f7f"),
+	"Control": Color("8eef97"),
+	"Animation": Color("c38ef1"),
+	"Mesh": Color("ffca5f"),
+}
+
+#static var DEFAULT_COLORS: Dictionary[String, Color] = {
+#	"Preview": AtIconsColorPair.new(Color("292929"), Color("e5e5e5")),
+#	"Node": AtIconsColorPair.new(Color("e0e0e0"), Color("5a5a5a")),
+#	"Node2D": AtIconsColorPair.new(Color("8da5f3"), Color("3d64dd")),
+#	"Node3D": AtIconsColorPair.new(Color("fc7f7f"), Color("cd3838")),
+#	"Control": AtIconsColorPair.new(Color("8eef97"), Color("2fa139")),
+#	"Animation": AtIconsColorPair.new(Color("c38ef1"), Color("a85de9")),
+#	"Mesh": AtIconsColorPair.new(Color("ffca5f"), Color("fea900")),
+#}
+
+func _enable_plugin() -> void:
+	if ProjectSettings.has_setting(COLOR_SETTING.name):
+		return
+	ProjectSettings.set_setting(COLOR_SETTING.name, COLOR_SETTING.value)
+	ProjectSettings.set_initial_value(COLOR_SETTING.name, COLOR_SETTING.value)
+	ProjectSettings.add_property_info(COLOR_SETTING)
+	pass
 
 
 #func _disable_plugin() -> void:
