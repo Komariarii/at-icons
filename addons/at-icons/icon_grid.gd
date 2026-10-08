@@ -238,10 +238,8 @@ func update_icon_list() -> void:
 ## Copies the string to the clipboard.
 func copy_icon_to_clipboard(filepath: String) -> void:
 	var string: String
-	print(filepath)
 	if not FileAccess.file_exists(filepath):
 		_create_icon_from_color_pair(filepath)
-		print("no file")
 	match selected_lang:
 		"GDScript":
 			string = "@icon(\"%s\")\n" % [filepath]
@@ -334,11 +332,9 @@ func _update_from_editor_settings() -> void:
 	var settings := EditorInterface.get_editor_settings()
 	
 	if settings.has_setting(SETTING_NAME_COLOR):
-		print("had setting")
 		icon_type_button.select(_get_items(icon_type_button, false).find(
 			settings.get_setting(SETTING_NAME_COLOR)
 		) + 1)
-		print(icon_type_button.selected)
 	if settings.has_setting(SETTING_NAME_LANG):
 		declaration_type_button.select(_get_items(declaration_type_button, false).find(
 			settings.get_setting(SETTING_NAME_LANG)
