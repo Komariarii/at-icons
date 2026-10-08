@@ -4,7 +4,7 @@ extends EditorPlugin
 var dock : EditorDock
 
 var COLOR_SETTING: Dictionary = {
-		"name": "at-icons/icon_colors",
+		"name": "@icons/colors/icon_colors",
 		"value": DEFAULT_COLORS,
 		"type": TYPE_DICTIONARY,
 		"hint": PROPERTY_HINT_DICTIONARY_TYPE,
@@ -31,13 +31,9 @@ const DEFAULT_COLORS: Dictionary[String, Color] = {
 #	"Mesh": AtIconsColorPair.new(Color("ffca5f"), Color("fea900")),
 #}
 
-func _enable_plugin() -> void:
-	if ProjectSettings.has_setting(COLOR_SETTING.name):
-		return
-	ProjectSettings.set_setting(COLOR_SETTING.name, COLOR_SETTING.value)
-	ProjectSettings.set_initial_value(COLOR_SETTING.name, COLOR_SETTING.value)
-	ProjectSettings.add_property_info(COLOR_SETTING)
-	pass
+#func _enable_plugin() -> void:
+	## Add autoloads here.
+	#pass
 
 
 #func _disable_plugin() -> void:
@@ -47,6 +43,7 @@ func _enable_plugin() -> void:
 
 func _enter_tree() -> void:
 	# Initialization of the plugin goes here.
+	_add_settings()
 	dock = EditorDock.new()
 	dock.title = "@icons"
 	dock.dock_icon = preload("res://addons/at-icons/node/at.svg")
@@ -54,7 +51,14 @@ func _enter_tree() -> void:
 	var dock_content := preload("res://addons/at-icons/icon_browser.tscn").instantiate()
 	dock.add_child(dock_content)
 	add_dock(dock)
-
+	
+func _add_settings() -> void:
+	if ProjectSettings.has_setting(COLOR_SETTING.name):
+		return
+	ProjectSettings.set_setting(COLOR_SETTING.name, COLOR_SETTING.value)
+	ProjectSettings.set_initial_value(COLOR_SETTING.name, COLOR_SETTING.value)
+	ProjectSettings.add_property_info(COLOR_SETTING)
+	
 func _exit_tree() -> void:
 	# Clean-up of the plugin goes here.
 	remove_dock(dock)

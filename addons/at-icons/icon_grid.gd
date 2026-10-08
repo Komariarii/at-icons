@@ -113,7 +113,7 @@ func update_icon_scale() -> void:
 	search(search_bar.text)
 
 func update_preview_colors() -> void:
-	selected_color = ProjectSettings.get_setting("at-icons/icon_colors", {selected_type: Color.TRANSPARENT})[selected_type] as Color
+	selected_color = ProjectSettings.get_setting("@icons/colors/icon_colors", {selected_type: Color.TRANSPARENT})[selected_type] as Color
 	match color_mode:
 		"dark": 
 				icon_material_light.set_shader_parameter("requested_color", selected_color)
@@ -125,7 +125,7 @@ func update_preview_colors() -> void:
 
 func update_icon_type_options() -> void:
 	icon_type_button.clear()
-	for icon_type in ProjectSettings.get_setting("at-icons/icon_colors") as Dictionary:
+	for icon_type in ProjectSettings.get_setting("@icons/colors/icon_colors") as Dictionary[String, Color]:
 		if icon_type == "Preview":
 			continue
 		icon_type_button.add_item(icon_type)
